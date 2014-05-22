@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Class to calculate prime numbers using the sequential prime number test.
- * @author Christian Mählig, Dan Häberlein
+ * @author Christian MÃ¤hlig, Dan HÃ¤berlein
  *
  */
 public class Prime {
