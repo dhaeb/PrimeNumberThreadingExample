@@ -24,7 +24,7 @@ import de.eva.prime.callable.PrimeCalculationUsingCallableParameterized;
  * @author Dan Häberlein
  *
  */
-public class PrimeCalculatorUsingThreads {
+public class PrimeCalculatorChart {
 
 	/**
 	 * Einfache Klasse um ein beliebiges Paar von Werten in Java zu repräsentieren.
