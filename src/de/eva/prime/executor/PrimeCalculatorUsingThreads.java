@@ -17,10 +17,34 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import de.eva.prime.callable.PrimeCalculationUsingCallableParameterized;
 
+
+/**
+ * Darstellung eines Plots: Vorgegebenen Anzahl von Threads in Abhängigkeit zur Dauer der Primzahlberechnung 
+ * 
+ * @author Dan Häberlein
+ *
+ */
 public class PrimeCalculatorUsingThreads {
 
+	/**
+	 * Einfache Klasse um ein beliebiges Paar von Werten in Java zu repräsentieren.
+	 * Konkret werden Instanzen dieser Klasse benutzt um die Messwerte der Zeitmessung (y) für 
+	 * die entsprechende Anzahl von Threads (x) zu repräsentieren.
+	 * 
+	 * @author Dan Häberlein
+	 *
+	 * @param <T>	The type of the first Element 
+	 * @param <U>	The type of the second Element
+	 */
 	private static class Pair<T extends Comparable<T>, U>  implements Comparable<Pair<T, ?>>{
 		
+		/**
+		 * Mit dieser Methode werden die Messpunkte in eine Form überführt,
+		 * sodass sie für die Bibliothek JFreeChart ({@link JFreeChart} lesbar sind. 
+		 * 
+		 * @param Eine Liste von Messpunkten
+		 * @return Ein Datensatz lesbar für ({@link JFreeChart}
+		 */
 		public static CategoryDataset wrapPairs(Iterable<Pair<Integer, Long>> pairs) {
 			DefaultCategoryDataset returnable = new DefaultCategoryDataset();
 			for(Pair<Integer, Long> p : pairs){
@@ -53,6 +77,12 @@ public class PrimeCalculatorUsingThreads {
 	
 	}
 	
+	/**
+	 * Mithilfe dieser Klasse wird ein JFreeChart erzeugt und in ein einfaches Diagramm in einem JFrame (Swing-Fenster) darstellt.  
+	 * 
+	 * @author Dan Häberlein
+	 *
+	 */
 	private static class ChartFrame extends JFrame {
 		private static final long serialVersionUID = 1L;
 
@@ -82,6 +112,15 @@ public class PrimeCalculatorUsingThreads {
 		new ChartFrame(Pair.wrapPairs(resultList));
 	}
 
+	/**
+	 * Berechnet die Ausführungszeit der Primzahlberechnung bis 100000 von start bis end Threads.
+	 * 
+	 * @param start	Anzahl Treads mit welcher die Berechnung begonnen wird  
+	 * @param end   Letzte Anzahl Threads welche noch berechnet werden soll, dannach abbruch
+	 * @param step  Erhöhung von Start nach jeder Berechnung um step 
+	 * @return
+	 * @throws Exception
+	 */
 	private static List<Pair<Integer, Long>> calcForBounds(int start, int end, int step) throws Exception {
 		List<Pair<Integer, Long>> resultList = new ArrayList<Pair<Integer, Long>>();
 		for(int threadCount = start; threadCount <= end; threadCount+=step){
@@ -90,6 +129,14 @@ public class PrimeCalculatorUsingThreads {
 		return resultList;
 	}
 
+	/**
+	 * Berechnet die Primzahlen mit einer gegebenen Anzahl von Threads.
+	 * 
+	 * @param threadCount Die Anzahl an Threads, die zur Berechnung verwendet werden.
+	 * @return Paardarstellung (Anzahl Threads / Zeit benötigt in Millisekunden)
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	private static Pair<Integer,Long> executePrimeCalc(int threadCount) throws InterruptedException, ExecutionException {
 		long startTime = System.currentTimeMillis();
 		PrimeCalculationUsingCallableParameterized.main(new String[]{Integer.toString(threadCount)});

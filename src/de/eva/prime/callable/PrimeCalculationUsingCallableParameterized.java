@@ -35,8 +35,6 @@ public class PrimeCalculationUsingCallableParameterized {
 		for(Future<List<Integer>> currentFuture : futureList){
 			resultList.addAll(currentFuture.get());
 		}
-		//print result
-		//System.out.println(resultList);
 		// cleanup callables
 		executor.shutdown();
 		executor.awaitTermination(100, TimeUnit.SECONDS);
